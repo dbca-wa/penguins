@@ -35,3 +35,5 @@ django-celery==3.1.10
 celery-with-redis==3.0
 openpyxl==1.8.5
 etcpy==0.1.1
+
+pylint>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
