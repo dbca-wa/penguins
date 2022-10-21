@@ -73,7 +73,7 @@ ptyprocess==0.5.1
 pycrypto==2.6.1
 pyephem==3.7.5.2
 pyflakes==0.8.1
-pylint==1.4.3
+pylint==2.6.1
 python-dateutil==2.4.2
 python-ldap==2.4.19
 python-magic==0.4.6
