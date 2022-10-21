@@ -58,7 +58,7 @@ ipython==4.2.0
 ipython-genutils==0.1.0
 kombu==3.0.26
 logilab-common==0.63.2
-lxml==3.4.4
+lxml==4.6.3
 mccabe==0.3
 nose==1.3.6
 openpyxl==1.8.5
