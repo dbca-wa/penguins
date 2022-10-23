@@ -14,7 +14,7 @@ backports.shutil-get-terminal-size==1.0.0
 beautifulsoup4==4.3.2
 billiard==3.3.0.20
 boto==2.27.0
-celery==3.1.18
+celery==5.2.2
 celery-with-redis==3.0
 coverage==3.7.1
 decorator==4.0.9
@@ -53,7 +53,7 @@ etcpy==0.1.1
 factory-boy==2.3.1
 flake8==2.1.0
 honcho==0.5.0
-html5lib==0.99999
+html5lib==0.99999999
 ipython==4.2.0
 ipython-genutils==0.1.0
 kombu==3.0.26
