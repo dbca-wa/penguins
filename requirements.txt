@@ -1,5 +1,5 @@
 BeautifulSoup==3.2.1
-Django==1.6.4
+Django==3.2.15
 Fabric==1.10.1
 Markdown==2.4
 Pillow==2.4.0
@@ -47,7 +47,7 @@ django-reversion==1.8.7
 #-e hg+https://bitbucket.org/david/django-storages@f153a70ba254dc129d9403546809a02256ef75b5#egg=django_storages-dev
 django-swingers==1.1.1
 django-wsgiserver==0.8.0rc1
-djangorestframework==2.3.13
+djangorestframework==3.11.2
 ecdsa==0.13
 etcpy==0.1.1
 factory-boy==2.3.1
