@@ -15,7 +15,7 @@ python-dotenv = "1.0.1"
 dj-database-url = "2.2.0"
 django-extensions = "3.2.3"
 gunicorn = "23.0.0"
-whitenoise = { version = "6.7.0", extras = ["brotli"] }
+whitenoise = { version = "6.8.2", extras = ["brotli"] }
 django-storages = { version = "1.14.4", extras = ["azure"] }
 webtemplate-dbca = "1.7.1"
 django-map-widgets = "0.5.1"
