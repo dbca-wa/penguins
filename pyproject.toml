@@ -12,7 +12,7 @@ django = "4.2.16"
 psycopg = {version = "3.2.3", extras = ["binary", "pool"]}
 dbca-utils = "2.0.2"
 python-dotenv = "1.0.1"
-dj-database-url = "2.2.0"
+dj-database-url = "2.3.0"
 django-extensions = "3.2.3"
 gunicorn = "23.0.0"
 whitenoise = { version = "6.7.0", extras = ["brotli"] }
