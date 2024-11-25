@@ -17,7 +17,7 @@ django-extensions = "3.2.3"
 gunicorn = "23.0.0"
 whitenoise = { version = "6.8.2", extras = ["brotli"] }
 django-storages = { version = "1.14.4", extras = ["azure"] }
-webtemplate-dbca = "1.7.1"
+webtemplate-dbca = "1.7.2"
 django-map-widgets = "0.5.1"
 xlsxwriter = "3.2.0"
 
