@@ -22,7 +22,7 @@ django-map-widgets = "0.5.1"
 xlsxwriter = "3.2.0"
 
 [tool.poetry.group.dev.dependencies]
-ipython = "^8.30.0"
+ipython = "^8.31.0"
 ipdb = "^0.13.11"
 pre-commit = "^4.0.1"
 
