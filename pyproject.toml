@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "~3.12"
 django = "4.2.17"
-psycopg = { version = "3.2.3", extras = ["binary", "pool"] }
+psycopg = { version = "3.2.4", extras = ["binary", "pool"] }
 dbca-utils = "2.0.2"
 python-dotenv = "1.0.1"
 dj-database-url = "2.3.0"
