@@ -450,11 +450,11 @@ wheels = [
 
 [[package]]
 name = "django-map-widgets"
-version = "0.5.2"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/10/8e/85ecfeb9fa18c026058cdb113cc9b7eca38ebcee2cf7a6d4ccf42f998b88/django_map_widgets-0.5.2.tar.gz", hash = "sha256:08e20134c93c346d37b5ca9bf80b9a5cb3c76d450752dc31bb8932c3022d3221", size = 158178, upload-time = "2026-03-07T19:14:07.486Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/cc/35c13e8be8fc9e7a8cad81995410984e55ff4e149647c3f8201b8ddfa50e/django_map_widgets-0.6.0.tar.gz", hash = "sha256:d6d7f73df8470b3e7a321614c241c808f1b33e04a5aa328c789efbc385b112e0", size = 171542, upload-time = "2026-07-19T17:55:30.211Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/13/ab/1806797562ecbfcc5ad063dec707b888f68e69f6b06b19f718d5ae0f1900/django_map_widgets-0.5.2-py3-none-any.whl", hash = "sha256:b694f013ccb86f8e48b6eeb19d33c322d01a085de559dd52ff7e73df1e62a3c9", size = 192488, upload-time = "2026-03-07T19:14:05.995Z" },
+    { url = "https://files.pythonhosted.org/packages/2c/66/21fd1ee0649fe0c4d5cbf8e07065a31f8649ee1da5368bd9d12e57b372fa/django_map_widgets-0.6.0-py3-none-any.whl", hash = "sha256:7924e0ed5590b4e11633591bc867c972b6b9126b95dc307ddaff988e2ffea066", size = 211262, upload-time = "2026-07-19T17:55:28.731Z" },
 ]
 
 [[package]]
@@ -763,7 +763,7 @@ requires-dist = [
     { name = "dj-database-url", specifier = "==3.1.2" },
     { name = "django", specifier = "==5.2.17" },
     { name = "django-extensions", specifier = "==4.1" },
-    { name = "django-map-widgets", specifier = "==0.5.2" },
+    { name = "django-map-widgets", specifier = "==0.6.0" },
     { name = "django-storages", extras = ["azure"], specifier = "==1.14.6" },
     { name = "gunicorn", extras = ["fast"], specifier = "==26.0.0" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = "==3.3.4" },
