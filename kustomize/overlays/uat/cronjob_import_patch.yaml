@@ -3,8 +3,7 @@ kind: CronJob
 metadata:
   name: penguins-import-cronjob
 spec:
-  # AWST: 07:05 every day.
-  schedule: '5 23 * * *'
+  schedule: '5 7 * * *'
   jobTemplate:
     spec:
       template:
