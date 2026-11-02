@@ -75,7 +75,7 @@ jobs:
       - name: Checkout
         # This step checks out the code from the repository.
         # It uses the actions/checkout action to clone the repository into the runner's workspace.
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - name: Docker meta default
         # This step generates metadata for the Docker image.
