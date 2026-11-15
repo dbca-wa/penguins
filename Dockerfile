@@ -1,37 +1,76 @@
 # syntax=docker/dockerfile:1
-FROM dhi.io/python:3.13-debian13-dev AS build-stage
-LABEL org.opencontainers.image.authors=asi@dbca.wa.gov.au
-LABEL org.opencontainers.image.source=https://github.com/dbca-wa/penguins
+# Args to centralise versions.
+# PYTHON_VERSION is the DHI runtime tag.
+ARG PYTHON_VERSION=3.13-debian13-dev
+ARG UV_VERSION=0.13
 
-# Install system packages required to install the project
-RUN apt-get update -y \
-  # Python package dependencies: gunicorn_h1c requires gcc, Django requires gdal, proj
-  && apt-get install -y --no-install-recommends gdal-bin proj-bin libgdal36 gcc g++ \
-  # Run shared library linker after installing packages
-  && ldconfig \
-  && rm -rf /var/lib/apt/lists/*
+# ---- Stages ----
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
+FROM dhi.io/python:${PYTHON_VERSION} AS builder
 
-# Import uv to install dependencies
-COPY --from=ghcr.io/astral-sh/uv:0.13 /uv /bin/
+# ---- Builder stage ----
+COPY --link --from=uv /uv /usr/local/bin/uv
+
 WORKDIR /app
-# Install project dependencies
-COPY pyproject.toml uv.lock ./
-RUN uv sync --no-group dev --link-mode=copy --compile-bytecode --no-python-downloads --frozen \
-  # Remove uv and lockfile after use
-  && rm -rf /bin/uv \
-  && rm uv.lock
+
+# Compilers and GDAL headers needed to dependencies from source.
+#   * gunicorn-h1c (gunicorn[fast]) publishes no cp313 wheel on any platform, so
+#     its C extension is always compiled from the sdist -> gcc.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  apt-get update && apt-get install -y --no-install-recommends \
+  gcc
+
+# Install only runtime dependencies into /app/.venv. The venv path must match
+# the runtime stage: uv writes absolute shebangs into console scripts such as
+# gunicorn.
+RUN --mount=type=cache,target=/root/.cache/uv \
+  --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+  --mount=type=bind,source=uv.lock,target=uv.lock \
+  uv sync --locked --no-group dev --link-mode=copy --compile-bytecode --no-python-downloads --no-install-project
+
+# ---- Runtime stage ----
+# NOTE: the runtime stage requires the -dev base in order to provide a shell for the application
+# to run Django management commands.
+FROM dhi.io/python:${PYTHON_VERSION} AS runtime
+LABEL org.opencontainers.image.title="penguins" \
+  org.opencontainers.image.description="DBCA Little Penguins Observations system" \
+  org.opencontainers.image.source="https://github.com/dbca-wa/penguins" \
+  org.opencontainers.image.vendor="DBCA" \
+  org.opencontainers.image.authors="asi@dbca.wa.gov.au"
 
 # Environment variables
-ENV PYTHONUNBUFFERED=1
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONUNBUFFERED=1 \
+  PYTHONDONTWRITEBYTECODE=1 \
+  PATH="/app/.venv/bin:$PATH"
 
-# Copy the remaining project files to finish building the project
-COPY gunicorn.py manage.py pyproject.toml ./
-COPY observations ./observations
-COPY penguins ./penguins
+# GDAL/GEOS/PROJ runtime libraries for django.contrib.gis. The DHI base has no
+# /etc/ld.so.cache, so ldconfig is required for Django's ctypes-based lookup.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  apt-get update && apt-get install -y --no-install-recommends \
+  libgdal36 \
+  libgeos-c1t64 \
+  libproj25 \
+  proj-data \
+  && ldconfig
+
+WORKDIR /app
+
+# Copy installed virtualenv from builder (same path, so console-script shebangs stay valid).
+# --chown must be numeric here: a link layer can't resolve usernames from the
+# base image's /etc/passwd.
+COPY --link --chown=65532:65532 --from=builder /app/.venv /app/.venv
+COPY --link --chown=65532:65532 gunicorn.py manage.py pyproject.toml ./
+COPY --link --chown=65532:65532 observations ./observations/
+COPY --link --chown=65532:65532 penguins ./penguins/
+
 # Compile scripts and collect static files
-RUN python -m compileall manage.py observations penguins \
-  && python manage.py collectstatic --noinput
+RUN <<EOF
+set -eux
+python -m compileall manage.py observations penguins
+python manage.py collectstatic --noinput
+EOF
 
 # Run the project as the nonroot user
 USER nonroot
