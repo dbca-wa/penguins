@@ -12,7 +12,7 @@ dependencies = [
   "dbca-utils==3.0.16",
   "python-dotenv==1.2.4",
   "dj-database-url==3.1.2",
-  "gunicorn[fast]==26.2.0",
+  "gunicorn[fast]==27.0.1",
   "django-extensions==4.1",
   "webtemplate-dbca==1.9.0",
   "whitenoise[brotli]==6.12.0",
